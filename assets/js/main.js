@@ -1,38 +1,41 @@
-const buttonElement = document.getElementById("playButton");
+const board = []
 
-const selectElement = document.getElementById("difficulty");
+const rows = 8;
+const columns = 8;
 
-const bombsElement = document.getElementById('bombs')
+const minesCount = 5;
+let minesLocation = [] //'2-2''3-5'
 
-const containerElement = document.querySelector('.container')
+let tileClicked = 0;
+let flagEnable = false;
 
-
-
-
-
-
-
+let gameOver = false;
 
 
+window.onload = function () {
+    startGame()
+}
 
-// qua sotto si scatena l'evento play ⬇️ 🕹️
+function startGame() {
+    document.getElementById('mines_count').innerText = minesCount;
 
-buttonElement.addEventListener('click', function () {
-    console.log("premuto il tasto play");
+    //This is the 2d array creator. Create a row, then add the first col with a single cell, then goes to the second col and so on. Then create the new row etc. Assigning every tile an Id "row-col" to indentify that. 
 
-    numbOfCells = Number(selectElement.value);
-    // qua leggo il valore scelto dall'utente di difficoltá
+    for (let r = 0; r < rows; r++) {
+        let row = []
+        for (let c = 0; c < columns; c++) {
+            let tile = document.createElement('div');
+            tile.id = r.toString() + "-" + c.toString()
+            // add to dom
+            document.getElementById("board").append(tile);
+            // add the tile to the row array
+            row.push(tile)
+        }
 
-    numbofBombs = Number(bombsElement.value)
-
-    genBombsArray(numbofBombs, numbOfCells);
-    // genero le dannatissime bombe
-    console.log(bombsArray);
-
-
-    generateField(containerElement, numbOfCells);
-    // questa funzione genera il campo
+        board.push(row);
+        console.log(board);
+    }
 
 
 
-})
+}

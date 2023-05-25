@@ -1,5 +1,3 @@
-@import "/node_modules/aesthetic-css/src/_loading.scss";
-
 * {
     margin: 0;
     padding: 0;
@@ -14,8 +12,8 @@ body {
 }
 
 #board {
-    width: 400px;
-    height: 400px;
+    width: 404px;
+    height: 404px;
     border: 10px solid darkgrey;
     background-color: lightgrey;
 
