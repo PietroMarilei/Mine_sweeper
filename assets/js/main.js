@@ -83,7 +83,7 @@ function clickTile() {
     let coords = tile.id.split("-") // "1-1"=> ["1","1"] queste sono le coord di un singolo tile ottenute dal suo id. 
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
-    checkMine()
+    checkMine(r, c)
 }
 
 function revealMines() {
@@ -120,16 +120,15 @@ function checkMine(r, c) {
     minesFound += checkTile(r + 1, c + 1)   //bot right
 
     if (minesFound > 0) {
-        board[r, c].innerText = minesFound
-        board[r, c].classList.add("x" + minesFound.toString())
+        board[r][c].innerText = minesFound;
+        board[r][c].classList.add("x" + minesFound.toString());
     }
 }
 
 function checkTile(r, c) {
-    if (r < 0 || r >= rows || c < 0 || c >= columns)
+    if (r < 0 || r >= rows || c < 0 || c >= columns) {
         return 0;
-
-    // 🔽 se tra le minesLocation c'è una stringa che corrisponde alla tile controllata r-c allora return 1
+    }
     if (minesLocation.includes(r.toString() + "-" + c.toString())) {
         return 1;
     }
