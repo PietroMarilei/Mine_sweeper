@@ -6,7 +6,7 @@ const columns = 8;
 const minesCount = 5;
 let minesLocation = [] //'2-2''3-5'
 
-let tileClicked = 0;
+let tilesClicked = 0;
 let flagEnable = false;
 
 let gameOver = false;
@@ -17,9 +17,21 @@ window.onload = function () {
 }
 
 function setMines() {
-    minesLocation.push("2-2")
-    minesLocation.push("2-3")
-    minesLocation.push("1-1")
+    // minesLocation.push("2-2")
+    // minesLocation.push("2-3")
+    // minesLocation.push("1-1")
+
+    let minesLeft = minesCount
+    while (minesLeft > 0) {
+        let r = Math.floor(Math.random() * rows);
+        let c = Math.floor(Math.random() * columns);
+        let id = r.toString() + "-" + c.toString();
+
+        if (!minesLocation.includes(id)) {
+            minesLocation.push(id);
+            minesLeft -= 1;
+        }
+    }
 }
 
 function startGame() {
@@ -28,7 +40,7 @@ function startGame() {
 
     //This is the 2d array creator. Create a row, then add the first col with a single cell, then goes to the second col and so on. Then create the new row etc. Assigning every tile an Id "row-col" to indentify that. 
     for (let r = 0; r < rows; r++) {
-        // Creatthe 1 wmpty row 
+        // Create 1 empty row 
         let row = []
         //starting from 0 col populate the row with col containing sigle tile
         for (let c = 0; c < columns; c++) {
@@ -60,6 +72,10 @@ function setFlag() {
 }
 
 function clickTile() {
+    if (gameOver || this.classList.contains("tile_clicked")) {
+        return;
+        //siccome game over== true non va questa non va
+    }
     //this si riferisce all'elemento cliccato che scatena l'evento, appunto tile
     let tile = this
     if (flagEnable) {
@@ -109,6 +125,7 @@ function checkMine(r, c) {
     }
 
     board[r][c].classList.add("tile_clicked")
+    tilesClicked += 1
 
     //check top 3 tiles, dice solo quante mine ha trovato vicine sopra
     minesFound += checkTile(r - 1, c - 1)   //top left
@@ -141,6 +158,12 @@ function checkMine(r, c) {
         checkMine(r + 1, c - 1);    //bottom left
         checkMine(r + 1, c);      //bottom
         checkMine(r + 1, c + 1);    //bottom right
+    }
+
+    if (tilesClicked == rows * columns - minesCount) {
+        document.getElementById('mines_count').innerText = "Cleared";
+        gameOver = true;
+        //sta roba non funziona, lascia aperte delle caselle
     }
 }
 
