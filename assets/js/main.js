@@ -11,6 +11,8 @@ let flagEnable = false;
 
 let gameOver = false;
 
+let userPoints = 0
+
 
 window.onload = function () {
     startGame()
@@ -99,6 +101,7 @@ function clickTile() {
     let coords = tile.id.split("-") // "1-1"=> ["1","1"] queste sono le coord di un singolo tile ottenute dal suo id. 
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
+    //ho ottenuto le sue coordinate
     checkMine(r, c)
 }
 
@@ -144,6 +147,7 @@ function checkMine(r, c) {
     if (minesFound > 0) {
         board[r][c].innerText = minesFound;
         board[r][c].classList.add("x" + minesFound.toString());
+        // 💚points go here ?
     }
     else {
         checkMine(r - 1, c - 1);    //top left
